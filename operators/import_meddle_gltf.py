@@ -1,16 +1,161 @@
 import bpy
 from bpy.types import Operator
+import os
+import importlib.util
 
-class MEKTOOLS_OT_ImportMeddleGLTF(Operator):
+# Load the bone names from bone_names.py in the data folder
+DATA_PATH = os.path.join(os.path.dirname(__file__), "../data")
+BONE_NAMES_FILE = os.path.join(DATA_PATH, "bone_names.py")
+
+# Define the racial code mapping to operator IDs in `mekrig_operators.py`
+racial_code_to_operator = {
+    'c0101': 'mektools.import_mekrig_midlander_male',
+    'c0201': 'mektools.import_mekrig_midlander_female',
+    'c0301': 'mektools.import_mekrig_highlander_male',
+    'c0401': 'mektools.import_mekrig_highlander_female',
+    'c0501': 'mektools.import_mekrig_elezen_male',
+    'c0601': 'mektools.import_mekrig_elezen_female',
+    'c0701': 'mektools.import_mekrig_miqote_male',
+    'c0801': 'mektools.import_mekrig_miqote_female',
+    'c0901': 'mektools.import_mekrig_roegadyn_male',
+    'c1001': 'mektools.import_mekrig_roegadyn_female',
+    'c1101': 'mektools.import_mekrig_lalafell_both',
+    'c1201': 'mektools.import_mekrig_lalafell_both',
+    'c1301': 'mektools.import_mekrig_aura_male',
+    'c1401': 'mektools.import_mekrig_aura_female',
+    'c1501': 'mektools.import_mekrig_hrothgar_male',
+    'c1601': 'mektools.import_mekrig_hrothgar_female',
+    'c1701': 'mektools.import_mekrig_viera_male',
+    'c1801': 'mektools.import_mekrig_viera_female',
+}
+
+# Function to load bone names from bone_names.py
+def load_bone_names():
+    spec = importlib.util.spec_from_file_location("bone_names", BONE_NAMES_FILE)
+    bone_names = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(bone_names)
+    return bone_names.bone_names  # This assumes bone_names.py defines a list named `bone_names`
+
+class MEKTOOLS_OT_ImportGLTFFromMeddle(Operator):
+    """Import GLTF from Meddle and perform cleanup tasks"""
     bl_idname = "mektools.import_meddle_gltf"
     bl_label = "Import GLTF from Meddle"
+    filepath: bpy.props.StringProperty(subtype="FILE_PATH")  # Use filepath property for file selection
 
     def execute(self, context):
-        self.report({'INFO'}, "Placeholder for Import GLTF from Meddle")
+        # Import the selected GLTF file
+        bpy.ops.import_scene.gltf(filepath=self.filepath)
+
+        # Step 1: Perform all cleanup tasks
+        # Delete Icosphere if it exists to avoid bone custom shape assignments
+        icosphere = bpy.data.objects.get("Icosphere")
+        if icosphere:
+            bpy.data.objects.remove(icosphere)
+
+        # Select all objects and clear parent, keeping transform
+        bpy.ops.object.select_all(action='SELECT')
+        bpy.ops.object.parent_clear(type='CLEAR_KEEP_TRANSFORM')
+
+        # Delete the "glTF_not_exported" collection if it exists
+        collection_to_delete = bpy.data.collections.get("glTF_not_exported")
+        if collection_to_delete:
+            bpy.data.collections.remove(collection_to_delete)
+
+        # Load the list of bone names to delete
+        bone_names_to_delete = load_bone_names()
+
+        # Directly reference the "Armature" object
+        armature = bpy.data.objects.get("Armature")
+
+        if not armature:
+            self.report({'ERROR'}, "No armature found with the name 'Armature'.")
+            return {'CANCELLED'}
+
+        # Activate the armature and enter Edit Mode to delete specific bones
+        bpy.context.view_layer.objects.active = armature
+        bpy.ops.object.mode_set(mode='EDIT')
+
+        # Remove bones from the armature based on `bone_names.py`
+        for bone_name in bone_names_to_delete:
+            if bone_name in armature.data.edit_bones:
+                armature.data.edit_bones.remove(armature.data.edit_bones[bone_name])
+
+        # Ensure Object Mode after bone deletion
+        bpy.ops.object.mode_set(mode='OBJECT')
+
+        # Step 2: Remove bones without influence on objects with "hir" in their name
+        hir_objects = [obj for obj in bpy.data.objects if "hir" in obj.name]
+        
+        # Collect influential bone names from vertex groups with weights
+        influential_bones = set()
+        for obj in hir_objects:
+            for vgroup in obj.vertex_groups:
+                if any(vgroup.index in [g.group for g in v.groups if g.weight > 0] for v in obj.data.vertices):
+                    influential_bones.add(vgroup.name)
+
+        # Enter Edit Mode for the "Armature" to delete non-influential bones
+        bpy.context.view_layer.objects.active = armature
+        bpy.ops.object.mode_set(mode='EDIT')
+
+        for bone in armature.data.edit_bones:
+            if bone.name not in influential_bones:
+                armature.data.edit_bones.remove(bone)
+
+        bpy.ops.object.mode_set(mode='OBJECT')
+
+        # Step 3: Identify the Mekrig to append based on "iri" object data
+        iri_object = next(
+            (obj for obj in bpy.data.objects if "iri" in obj.name or any("iri" in mat.name for mat in obj.material_slots)),
+            None
+        )
+
+        # Extract the racial code from the object name
+        for code in racial_code_to_operator:
+            if code in iri_object.name:
+                operator_id = racial_code_to_operator[code]
+                break
+
+        # Use the identified operator to append the Mekrig
+        result = eval(f"bpy.ops.{operator_id}()")
+
+        # Locate "n_root" in the appended collection
+        n_root_armature = bpy.data.objects.get("n_root")
+
+        # Step 4: Join Armature to n_root and selectively parent hair bones
+        # Select "Armature" and "n_root" and join
+        bpy.context.view_layer.objects.active = n_root_armature
+        armature.select_set(True)
+        n_root_armature.select_set(True)
+        bpy.ops.object.join()
+
+        # Set parent of only hair bones to "mek kao" in "n_root"
+        bpy.ops.object.mode_set(mode='EDIT')
+        mek_kao_bone = n_root_armature.data.edit_bones.get("mek kao")
+        joined_bones = [bone.name for bone in armature.data.bones]  # Store original hair bone names
+
+        # Set parent only for hair bones by checking against the joined_bones list
+        for bone in n_root_armature.data.edit_bones:
+            if bone.name in joined_bones:
+                bone.parent = mek_kao_bone
+
+        bpy.ops.object.mode_set(mode='OBJECT')
+
+        # Step 5: Parent all objects to "n_root"
+        bpy.ops.object.select_all(action='SELECT')
+        n_root_armature.select_set(True)
+        bpy.context.view_layer.objects.active = n_root_armature
+        bpy.ops.object.parent_set(type='OBJECT')
+
+        self.report({'INFO'}, "Imported GLTF, cleaned up, joined hair bones, and parented all to 'n_root'.")
         return {'FINISHED'}
 
+    def invoke(self, context, event):
+        # Open the file browser for GLTF import
+        context.window_manager.fileselect_add(self)
+        return {'RUNNING_MODAL'}
+
 def register():
-    bpy.utils.register_class(MEKTOOLS_OT_ImportMeddleGLTF)
+    bpy.utils.register_class(MEKTOOLS_OT_ImportGLTFFromMeddle)
 
 def unregister():
-    bpy.utils.unregister_class(MEKTOOLS_OT_ImportMeddleGLTF)
+    bpy.utils.unregister_class(MEKTOOLS_OT_ImportGLTFFromMeddle)

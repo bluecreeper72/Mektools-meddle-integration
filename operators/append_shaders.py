@@ -10,6 +10,7 @@ class MEKTOOLS_OT_AppendShaders(Operator):
     """Append all materials from shaders.blend"""
     bl_idname = "mektools.append_shaders"
     bl_label = "Append Shaders"
+    bl_description = "Append Shaders from WOL Shaders by Skulblaka"  # Set the tooltip here
 
     def execute(self, context):
         if not os.path.exists(SHADERS_FILE):
