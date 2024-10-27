@@ -1,0 +1,8 @@
+name: "MekTools NOR"
+blender:
+  min_version: 4.2
+author: "Meku Maki"
+version: [1, 0, 0]
+description: "A set of custom tools for Blender"
+category: "Import-Export"
+location: "View3D > NOR Tab"
