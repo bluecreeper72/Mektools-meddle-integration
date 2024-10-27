@@ -16,12 +16,17 @@ class VIEW3D_PT_ImportPanel(Panel):
         row.operator("mektools.import_meddle_gltf", text="GLTF from Meddle")
         row.operator("mektools.import_textools_fbx", text="FBX from TexTools")
 
-        # Shader Append Button
-        layout.operator("mektools.append_shaders", text="Append Shaders", icon="SHADING_TEXTURE")
+        # Shader Append Button with Tooltip
+        layout.operator(
+            "mektools.append_shaders",
+            text="Append Shaders",
+            emboss=True,
+            icon="SHADING_TEXTURE"
+        ).description = "Append Shaders from WOL Shaders by Skulblaka"
 
         # Rigs Label and Popovers for Male and Female Rigs
-        layout.separator()  # Optional separator for visual clarity
-        layout.label(text="Rigs")  # Label for Rigs section
+        layout.separator()
+        layout.label(text="Rigs")
         split = layout.split(factor=0.5, align=True)
         split.popover("MEKTOOLS_PT_MaleRigs", text="Male", icon_value=0)
         split.popover("MEKTOOLS_PT_FemaleRigs", text="Female", icon_value=0)
