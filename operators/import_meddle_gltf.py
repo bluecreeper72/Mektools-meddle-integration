@@ -43,8 +43,11 @@ class MEKTOOLS_OT_ImportGLTFFromMeddle(Operator):
     filepath: bpy.props.StringProperty(subtype="FILE_PATH")  # Use filepath property for file selection
 
     def execute(self, context):
-        # Import the selected GLTF file
+        # Import the selected GLTF file and capture the imported objects
         bpy.ops.import_scene.gltf(filepath=self.filepath)
+        
+        # Capture only the newly imported mesh objects
+        imported_meshes = [obj for obj in context.selected_objects if obj.type == 'MESH']
 
         # Step 1: Perform all cleanup tasks
         # Delete Icosphere if it exists to avoid bone custom shape assignments
@@ -103,6 +106,9 @@ class MEKTOOLS_OT_ImportGLTFFromMeddle(Operator):
 
         bpy.ops.object.mode_set(mode='OBJECT')
 
+        # Generate list of remaining hair bones after deleting unwanted bones
+        hair_bone_names = [bone.name for bone in armature.data.bones]
+
         # Step 3: Identify the Mekrig to append based on "iri" object data
         iri_object = next(
             (obj for obj in bpy.data.objects if "iri" in obj.name or any("iri" in mat.name for mat in obj.material_slots)),
@@ -131,12 +137,22 @@ class MEKTOOLS_OT_ImportGLTFFromMeddle(Operator):
         # Set parent of only hair bones to "mek kao" in "n_root"
         bpy.ops.object.mode_set(mode='EDIT')
         mek_kao_bone = n_root_armature.data.edit_bones.get("mek kao")
-        joined_bones = [bone.name for bone in armature.data.bones]  # Store original hair bone names
 
-        # Set parent only for hair bones by checking against the joined_bones list
+        # Set parent only for hair bones
         for bone in n_root_armature.data.edit_bones:
-            if bone.name in joined_bones:
+            if bone.name in hair_bone_names:
                 bone.parent = mek_kao_bone
+
+        # Switch to Pose Mode to apply custom shape and color to hair bones
+        bpy.ops.object.mode_set(mode='POSE')
+        cs_hair = bpy.data.objects.get("cs.hair")
+
+        # Apply custom shape and Theme 1 Red color directly to hair bones
+        for bone_name in hair_bone_names:
+            pose_bone = n_root_armature.pose.bones.get(bone_name)
+            if pose_bone:
+                pose_bone.custom_shape = cs_hair
+                pose_bone.color.palette = 'THEME01'  # Theme 1 Red
 
         bpy.ops.object.mode_set(mode='OBJECT')
 
@@ -146,7 +162,13 @@ class MEKTOOLS_OT_ImportGLTFFromMeddle(Operator):
         bpy.context.view_layer.objects.active = n_root_armature
         bpy.ops.object.parent_set(type='OBJECT')
 
-        self.report({'INFO'}, "Imported GLTF, cleaned up, joined hair bones, and parented all to 'n_root'.")
+        # Step 6: Update Armature Modifiers on imported meshes only
+        for obj in imported_meshes:
+            for mod in obj.modifiers:
+                if mod.type == 'ARMATURE':  # Check if it is an Armature modifier
+                    mod.object = bpy.data.objects["n_root"]  # Set n_root as the target
+
+        self.report({'INFO'}, "Imported GLTF, cleaned up, joined hair bones, applied color and custom shape, and parented all to 'n_root'.")
         return {'FINISHED'}
 
     def invoke(self, context, event):

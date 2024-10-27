@@ -1,9 +1,6 @@
-- Had error importing the GLTF character
-- SO FUCKING CLOSE
+
 - Make sure you fix hrothgar female button missing in the Female Rigs because chatgpt thinks the hrothgar is not available yet.
 
-- Needs to join all the mesh objects
-- Needs to set the armature modifiers target to n_root
 - Make sure that when you do change the assets that the Elezen female name thing is fixed back to Elezen Female
 
 
