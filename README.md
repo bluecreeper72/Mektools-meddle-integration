@@ -39,3 +39,14 @@ The button for Import GLTF from Meddle and FBX from Textools are both to set thi
 
 Finally, Join the [Discord](https://www.discord.gg/98DqcKE) and ask any questions in the Help channel or share the cool stuff you've made with mektools!
 If there are any issues found, please make sure you are using Blender 4.2 or higher and then send a message in the discord server for help.
+
+
+Disclaimer: Do this in newly opened blender files for best results, if you have additional data in the blender file when importing, things might implode. If you want more than 1 character to be in the scene together after they've both been processed, select all of their mesh and the bones in Object mode, hit M to move the stuff to a new Collection, Name that collection the name of your character-- I like having mine set like this image below:
+
+![Outliner Collection example](assets/outliner_collection_example.png)
+
+when I go to append my characters to another scene, I go to File > Append > Navigate to the Blend file they are located in > Collections and then click on this image below:
+
+![Appending Characters to scenes](assets/append_char_collection.png)
+
+This will pull in characters from other files and keep their collections intact! ♥
