@@ -17,7 +17,8 @@ class MEKTOOLS_PT_FemaleRigs(Panel):
         layout.operator("mektools.import_mekrig_roegadyn_female", text="Roegadyn Female")
         layout.operator("mektools.import_mekrig_aura_female", text="Aura Female")
         layout.operator("mektools.import_mekrig_viera_female", text="Viera Female")
-        layout.operator("mektools.import_mekrig_lalafell_female", text="Lalafell Female")  # Lalafell Female button
+        layout.operator("mektools.import_mekrig_hrothgar_female", text="Hrothgar Female")
+        layout.operator("mektools.import_mekrig_lalafell_female", text="Lalafell Female") 
 
 def register():
     bpy.utils.register_class(MEKTOOLS_PT_FemaleRigs)

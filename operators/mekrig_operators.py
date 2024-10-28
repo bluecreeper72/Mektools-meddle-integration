@@ -135,6 +135,12 @@ class MEKTOOLS_OT_ImportMekrigAuraFemale(MEKTOOLS_OT_ImportMekrigBase):
     collection_name = "Aura Female"
     file_name = "Aura Female.blend"
 
+class MEKTOOLS_OT_ImportMekrigHrothgarFemale(MEKTOOLS_OT_ImportMekrigBase):
+    bl_idname = "mektools.import_mekrig_hrothgar_female"
+    bl_label = "Import Hrothgar Female Rig"
+    collection_name = "Hrothgar Female"
+    file_name = "Hrothgar Female.blend"
+
 class MEKTOOLS_OT_ImportMekrigVieraFemale(MEKTOOLS_OT_ImportMekrigBase):
     bl_idname = "mektools.import_mekrig_viera_female"
     bl_label = "Import Viera Female Rig"
@@ -159,6 +165,7 @@ def register():
     bpy.utils.register_class(MEKTOOLS_OT_ImportMekrigMiqoteFemale)
     bpy.utils.register_class(MEKTOOLS_OT_ImportMekrigRoegadynFemale)
     bpy.utils.register_class(MEKTOOLS_OT_ImportMekrigAuraFemale)
+    bpy.utils.register_class(MEKTOOLS_OT_ImportMekrigHrothgarFemale)
     bpy.utils.register_class(MEKTOOLS_OT_ImportMekrigVieraFemale)
 
 def unregister():
@@ -178,4 +185,5 @@ def unregister():
     bpy.utils.unregister_class(MEKTOOLS_OT_ImportMekrigMiqoteFemale)
     bpy.utils.unregister_class(MEKTOOLS_OT_ImportMekrigRoegadynFemale)
     bpy.utils.unregister_class(MEKTOOLS_OT_ImportMekrigAuraFemale)
+    bpy.utils.unregister_class(MEKTOOLS_OT_ImportMekrigHrothgarFemale)
     bpy.utils.unregister_class(MEKTOOLS_OT_ImportMekrigVieraFemale)
