@@ -1,13 +1,13 @@
 # Mektools-Version 1.0.1
- Mektools 1.0 for Dawntrail is finally here!
+## Mektools 1.0 for Dawntrail is finally here!
 
  please wait a bit while I organize a proper tutorial and place it here...
 
 
- Step 1: Go to the releases and download the release
- Step 2: Open Blender 4.2.2 or later
- Step 3: Go to Edit > Preferences > Addons > Install from disc...
- Step 4: Go to the N Panel in the 3D Viewport to the Mektools tab...
+ **Step 1:** Go to the releases and download the release
+ **Step 2:** Open Blender 4.2.2 or later
+ **Step 3:** Go to Edit > Preferences > Addons > Install from disc...
+ **Step 4:** Go to the N Panel in the 3D Viewport to the Mektools tab...
 
  Now you need to have something to import.
 
@@ -19,9 +19,9 @@ On the Meddle UI, go to the Options tab, change Export type to RAW. This will ex
 
 It will prompt you with a window to select where you will be exporting the models and textures, pick somewhere you will remember.
 
-Step 5: Go to Mektools tab and hit "GLTF from Meddle"
-Step 6: Navigate to your character.gltf that was exported (or whatever you named it)
-Step 7: wait for a moment because it will make blender look like that its frozen-- it hasnt lol.
+**Step 5:** Go to Mektools tab and hit "GLTF from Meddle"
+**Step 6:** Navigate to your character.gltf that was exported (or whatever you named it)
+**Step 7:** wait for a moment because it will make blender look like that its frozen-- it hasnt lol.
 
 After you've hit this point, the character will be imported and processed according to how I typically set up characters in blender. All except for the shaders.
 
