@@ -31,6 +31,8 @@ For the shaders to get fixed, you currently will need to do things a little manu
 
 The Append Shaders button will pull in the materials from the shaders.blend file, this is some shaders that all you need to do is replace the image textures with the ones that are for each part of your character. I plan to have this also be automated but that needs to come later when some color set stuff has been figured out.
 
+**I will make a detailed video tutorial explaining how to import things and get gear to look proper too! just keep an eye out!**
+
 The Rigs Male and Female buttons is used to manually append the Dawntrail Mekrigs to your scene. This is intended if you go to File > Import > GLTF or FBX and want to do things manually.
 
 The button for Import GLTF from Meddle and FBX from Textools are both to set things up automatically.
