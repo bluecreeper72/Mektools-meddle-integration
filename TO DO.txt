@@ -1,9 +1,4 @@
-
-- Make sure you fix hrothgar female button missing in the Female Rigs because chatgpt thinks the hrothgar is not available yet.
-
-- Make sure that when you do change the assets that the Elezen female name thing is fixed back to Elezen Female
+relax.......
 
 
-
-- check if the assets are fine in the last upload to makers guild?
-for some reason the bone constraints on the feet and the hands still seem to be fucked up like before the hana fix so that too needs to get checked.
+holy canoli.
