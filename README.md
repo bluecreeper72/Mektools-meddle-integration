@@ -1,9 +1,6 @@
 # Mektools-Version 1.0.1
 ## Mektools 1.0 for Dawntrail is finally here!
 
- ![MekTools Addon Interface](assets/mektools_ui.png)
-
- 
  
  
  please wait a bit while I organize a proper tutorial and place it here...
