@@ -1,10 +1,15 @@
 # Mektools-Version 1.0.1
 ## Mektools 1.0 for Dawntrail is finally here!
 
+ ![MekTools Addon Interface](assets/mektools_ui.png)
+
+ 
+ 
+ 
  please wait a bit while I organize a proper tutorial and place it here...
 
 
- **Step 1:** Go to the releases and download the release
+ **Step 1:** Go to the green code button and hit Download ZIP (Do not unpack this)
  **Step 2:** Open Blender 4.2.2 or later
  **Step 3:** Go to Edit > Preferences > Addons > Install from disc...
  **Step 4:** Go to the N Panel in the 3D Viewport to the Mektools tab...
