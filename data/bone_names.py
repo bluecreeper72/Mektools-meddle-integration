@@ -1,3 +1,5 @@
+# I generate this based on some code to give me all the bone names in the Mek Rig, I also am including the viera ear bones in this specifically because of how some automatic processing goes... end me lol.
+
 bone_names = [
 "n_hara",
 "j_kosi",
@@ -402,4 +404,20 @@ bone_names = [
 "Ring_2.R",
 "Thumb_1.R",
 "Thumb_2.R",
+"j_zera_a_l",
+"j_zera_b_l",
+"j_zera_a_r",
+"j_zera_b_r",
+"j_zerb_a_l",
+"j_zerb_b_l",
+"j_zerb_a_r",
+"j_zerb_b_r",
+"j_zerc_a_l",
+"j_zerc_b_l",
+"j_zerc_a_r",
+"j_zerc_b_r",
+"j_zerd_a_l",
+"j_zerd_b_l",
+"j_zerd_a_r",
+"j_zerd_b_r",
 ]
