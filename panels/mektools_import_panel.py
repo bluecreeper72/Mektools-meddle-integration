@@ -5,7 +5,7 @@ class VIEW3D_PT_ImportPanel(Panel):
     bl_label = "Import"
     bl_idname = "VIEW3D_PT_import_panel"
     bl_space_type = 'VIEW_3D'
-    bl_region_type = 'UI'
+    bl_region_type = 'UI'  
     bl_category = 'Mektools'
 
     def draw(self, context):
@@ -32,9 +32,8 @@ class MEKTOOLS_PT_MaleRigs(Panel):
     bl_label = "Male Mekrigs"
     bl_idname = "MEKTOOLS_PT_MaleRigs"
     bl_space_type = 'VIEW_3D'
-    bl_region_type = 'UI'
-    bl_parent_id = "VIEW3D_PT_import_panel"  # Link to main Import Panel
-    bl_options = {'HIDE_HEADER', 'DEFAULT_CLOSED'}  # Collapse by default
+    bl_region_type = 'WINDOW'
+    bl_options = {'HIDE_HEADER', 'DEFAULT_CLOSED'}
 
     def draw(self, context):
         layout = self.layout
@@ -54,9 +53,8 @@ class MEKTOOLS_PT_FemaleRigs(Panel):
     bl_label = "Female Mekrigs"
     bl_idname = "MEKTOOLS_PT_FemaleRigs"
     bl_space_type = 'VIEW_3D'
-    bl_region_type = 'UI'
-    bl_parent_id = "VIEW3D_PT_import_panel"  # Link to main Import Panel
-    bl_options = {'HIDE_HEADER', 'DEFAULT_CLOSED'}  # Collapse by default
+    bl_region_type = 'WINDOW'
+    bl_options = {'HIDE_HEADER', 'DEFAULT_CLOSED'}
 
     def draw(self, context):
         layout = self.layout
