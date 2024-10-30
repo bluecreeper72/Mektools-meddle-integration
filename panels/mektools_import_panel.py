@@ -26,6 +26,7 @@ class VIEW3D_PT_ImportPanel(Panel):
         split.popover("MEKTOOLS_PT_MaleRigs", text="Male", icon_value=0)
         split.popover("MEKTOOLS_PT_FemaleRigs", text="Female", icon_value=0)
 
+
 class MEKTOOLS_PT_MaleRigs(Panel):
     """Male Mekrigs Import"""
     bl_label = "Male Mekrigs"
@@ -46,6 +47,7 @@ class MEKTOOLS_PT_MaleRigs(Panel):
         layout.operator("mektools.import_mekrig_aura_male", text="Aura Male")
         layout.operator("mektools.import_mekrig_hrothgar_male", text="Hrothgar Male")
         layout.operator("mektools.import_mekrig_viera_male", text="Viera Male")
+
 
 class MEKTOOLS_PT_FemaleRigs(Panel):
     """Female Mekrigs Import"""
@@ -68,10 +70,12 @@ class MEKTOOLS_PT_FemaleRigs(Panel):
         layout.operator("mektools.import_mekrig_hrothgar_female", text="Hrothgar Female")
         layout.operator("mektools.import_mekrig_viera_female", text="Viera Female")
 
+
 def register():
     bpy.utils.register_class(VIEW3D_PT_ImportPanel)
     bpy.utils.register_class(MEKTOOLS_PT_MaleRigs)
     bpy.utils.register_class(MEKTOOLS_PT_FemaleRigs)
+
 
 def unregister():
     bpy.utils.unregister_class(VIEW3D_PT_ImportPanel)
