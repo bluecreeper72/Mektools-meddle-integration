@@ -7,7 +7,7 @@ ASSETS_PATH = os.path.join(os.path.dirname(__file__), "../assets")
 
 class MEKTOOLS_OT_ImportMekrigBase(Operator):
     """Base class for importing Mekrig collections"""
-    bl_options = {'REGISTER', 'UNDO'}
+    bl_options = {'REGISTER', 'UNDO', 'INTERNAL'}  # Add 'INTERNAL' to hide from UI
 
     collection_name: str
     file_name: str
@@ -40,48 +40,56 @@ class MEKTOOLS_OT_ImportMekrigBase(Operator):
 class MEKTOOLS_OT_ImportMekrigMidlanderMale(MEKTOOLS_OT_ImportMekrigBase):
     bl_idname = "mektools.import_mekrig_midlander_male"
     bl_label = "Import Midlander Male Rig"
+    bl_options = {'INTERNAL'}
     collection_name = "Midlander Male"
     file_name = "Midlander Male.blend"
 
 class MEKTOOLS_OT_ImportMekrigHighlanderMale(MEKTOOLS_OT_ImportMekrigBase):
     bl_idname = "mektools.import_mekrig_highlander_male"
     bl_label = "Import Highlander Male Rig"
+    bl_options = {'INTERNAL'}
     collection_name = "Highlander Male"
     file_name = "Highlander Male.blend"
 
 class MEKTOOLS_OT_ImportMekrigElezenMale(MEKTOOLS_OT_ImportMekrigBase):
     bl_idname = "mektools.import_mekrig_elezen_male"
     bl_label = "Import Elezen Male Rig"
+    bl_options = {'INTERNAL'}
     collection_name = "Elezen Male"
     file_name = "Elezen Male.blend"
 
 class MEKTOOLS_OT_ImportMekrigMiqoteMale(MEKTOOLS_OT_ImportMekrigBase):
     bl_idname = "mektools.import_mekrig_miqote_male"
     bl_label = "Import Miqote Male Rig"
+    bl_options = {'INTERNAL'}
     collection_name = "Miqote Male"
     file_name = "Miqote Male.blend"
 
 class MEKTOOLS_OT_ImportMekrigRoegadynMale(MEKTOOLS_OT_ImportMekrigBase):
     bl_idname = "mektools.import_mekrig_roegadyn_male"
     bl_label = "Import Roegadyn Male Rig"
+    bl_options = {'INTERNAL'}
     collection_name = "Roegadyn Male"
     file_name = "Roegadyn Male.blend"
 
 class MEKTOOLS_OT_ImportMekrigAuraMale(MEKTOOLS_OT_ImportMekrigBase):
     bl_idname = "mektools.import_mekrig_aura_male"
     bl_label = "Import Aura Male Rig"
+    bl_options = {'INTERNAL'}
     collection_name = "Aura Male"
     file_name = "Aura Male.blend"
 
 class MEKTOOLS_OT_ImportMekrigHrothgarMale(MEKTOOLS_OT_ImportMekrigBase):
     bl_idname = "mektools.import_mekrig_hrothgar_male"
     bl_label = "Import Hrothgar Male Rig"
+    bl_options = {'INTERNAL'}
     collection_name = "Hrothgar Male"
     file_name = "Hrothgar Male.blend"
 
 class MEKTOOLS_OT_ImportMekrigVieraMale(MEKTOOLS_OT_ImportMekrigBase):
     bl_idname = "mektools.import_mekrig_viera_male"
     bl_label = "Import Viera Male Rig"
+    bl_options = {'INTERNAL'}
     collection_name = "Viera Male"
     file_name = "Viera Male.blend"
 
@@ -89,12 +97,14 @@ class MEKTOOLS_OT_ImportMekrigVieraMale(MEKTOOLS_OT_ImportMekrigBase):
 class MEKTOOLS_OT_ImportMekrigLalafellMale(MEKTOOLS_OT_ImportMekrigBase):
     bl_idname = "mektools.import_mekrig_lalafell_male"
     bl_label = "Import Lalafell Male Rig"
+    bl_options = {'INTERNAL'}
     collection_name = "Lalafell"
     file_name = "Lalafell.blend"
 
 class MEKTOOLS_OT_ImportMekrigLalafellFemale(MEKTOOLS_OT_ImportMekrigBase):
     bl_idname = "mektools.import_mekrig_lalafell_female"
     bl_label = "Import Lalafell Female Rig"
+    bl_options = {'INTERNAL'}
     collection_name = "Lalafell"
     file_name = "Lalafell.blend"
 
@@ -102,88 +112,68 @@ class MEKTOOLS_OT_ImportMekrigLalafellFemale(MEKTOOLS_OT_ImportMekrigBase):
 class MEKTOOLS_OT_ImportMekrigMidlanderFemale(MEKTOOLS_OT_ImportMekrigBase):
     bl_idname = "mektools.import_mekrig_midlander_female"
     bl_label = "Import Midlander Female Rig"
+    bl_options = {'INTERNAL'}
     collection_name = "Midlander Female"
     file_name = "Midlander Female.blend"
 
 class MEKTOOLS_OT_ImportMekrigHighlanderFemale(MEKTOOLS_OT_ImportMekrigBase):
     bl_idname = "mektools.import_mekrig_highlander_female"
     bl_label = "Import Highlander Female Rig"
+    bl_options = {'INTERNAL'}
     collection_name = "Highlander Female"
     file_name = "Highlander Female.blend"
 
 class MEKTOOLS_OT_ImportMekrigElezenFemale(MEKTOOLS_OT_ImportMekrigBase):
     bl_idname = "mektools.import_mekrig_elezen_female"
     bl_label = "Import Elezen Female Rig"
+    bl_options = {'INTERNAL'}
     collection_name = "Elezen Female"
     file_name = "Elezen Female.blend"
 
 class MEKTOOLS_OT_ImportMekrigMiqoteFemale(MEKTOOLS_OT_ImportMekrigBase):
     bl_idname = "mektools.import_mekrig_miqote_female"
     bl_label = "Import Miqote Female Rig"
+    bl_options = {'INTERNAL'}
     collection_name = "Miqote Female"
     file_name = "Miqote Female.blend"
 
 class MEKTOOLS_OT_ImportMekrigRoegadynFemale(MEKTOOLS_OT_ImportMekrigBase):
     bl_idname = "mektools.import_mekrig_roegadyn_female"
     bl_label = "Import Roegadyn Female Rig"
+    bl_options = {'INTERNAL'}
     collection_name = "Roegadyn Female"
     file_name = "Roegadyn Female.blend"
 
 class MEKTOOLS_OT_ImportMekrigAuraFemale(MEKTOOLS_OT_ImportMekrigBase):
     bl_idname = "mektools.import_mekrig_aura_female"
     bl_label = "Import Aura Female Rig"
+    bl_options = {'INTERNAL'}
     collection_name = "Aura Female"
     file_name = "Aura Female.blend"
 
 class MEKTOOLS_OT_ImportMekrigHrothgarFemale(MEKTOOLS_OT_ImportMekrigBase):
     bl_idname = "mektools.import_mekrig_hrothgar_female"
     bl_label = "Import Hrothgar Female Rig"
+    bl_options = {'INTERNAL'}
     collection_name = "Hrothgar Female"
     file_name = "Hrothgar Female.blend"
 
 class MEKTOOLS_OT_ImportMekrigVieraFemale(MEKTOOLS_OT_ImportMekrigBase):
     bl_idname = "mektools.import_mekrig_viera_female"
     bl_label = "Import Viera Female Rig"
+    bl_options = {'INTERNAL'}
     collection_name = "Viera Female"
     file_name = "Viera Female.blend"
 
-# Register and unregister functions
+# List of all classes to register and unregister
+classes = [
+    MEKTOOLS_OT_ImportMekrigMidlanderMale, MEKTOOLS_OT_ImportMekrigHighlanderMale, MEKTOOLS_OT_ImportMekrigElezenMale, MEKTOOLS_OT_ImportMekrigMiqoteMale, MEKTOOLS_OT_ImportMekrigRoegadynMale, MEKTOOLS_OT_ImportMekrigAuraMale, MEKTOOLS_OT_ImportMekrigHrothgarMale, MEKTOOLS_OT_ImportMekrigVieraMale, MEKTOOLS_OT_ImportMekrigLalafellMale, MEKTOOLS_OT_ImportMekrigLalafellFemale, MEKTOOLS_OT_ImportMekrigMidlanderFemale, MEKTOOLS_OT_ImportMekrigHighlanderFemale, MEKTOOLS_OT_ImportMekrigElezenFemale, MEKTOOLS_OT_ImportMekrigMiqoteFemale, MEKTOOLS_OT_ImportMekrigRoegadynFemale, MEKTOOLS_OT_ImportMekrigAuraFemale, MEKTOOLS_OT_ImportMekrigHrothgarFemale, MEKTOOLS_OT_ImportMekrigVieraFemale
+]
+
 def register():
-    bpy.utils.register_class(MEKTOOLS_OT_ImportMekrigMidlanderMale)
-    bpy.utils.register_class(MEKTOOLS_OT_ImportMekrigHighlanderMale)
-    bpy.utils.register_class(MEKTOOLS_OT_ImportMekrigElezenMale)
-    bpy.utils.register_class(MEKTOOLS_OT_ImportMekrigMiqoteMale)
-    bpy.utils.register_class(MEKTOOLS_OT_ImportMekrigRoegadynMale)
-    bpy.utils.register_class(MEKTOOLS_OT_ImportMekrigAuraMale)
-    bpy.utils.register_class(MEKTOOLS_OT_ImportMekrigHrothgarMale)
-    bpy.utils.register_class(MEKTOOLS_OT_ImportMekrigVieraMale)
-    bpy.utils.register_class(MEKTOOLS_OT_ImportMekrigLalafellMale)
-    bpy.utils.register_class(MEKTOOLS_OT_ImportMekrigLalafellFemale)
-    bpy.utils.register_class(MEKTOOLS_OT_ImportMekrigMidlanderFemale)
-    bpy.utils.register_class(MEKTOOLS_OT_ImportMekrigHighlanderFemale)
-    bpy.utils.register_class(MEKTOOLS_OT_ImportMekrigElezenFemale)
-    bpy.utils.register_class(MEKTOOLS_OT_ImportMekrigMiqoteFemale)
-    bpy.utils.register_class(MEKTOOLS_OT_ImportMekrigRoegadynFemale)
-    bpy.utils.register_class(MEKTOOLS_OT_ImportMekrigAuraFemale)
-    bpy.utils.register_class(MEKTOOLS_OT_ImportMekrigHrothgarFemale)
-    bpy.utils.register_class(MEKTOOLS_OT_ImportMekrigVieraFemale)
+    for cls in classes:
+        bpy.utils.register_class(cls)
 
 def unregister():
-    bpy.utils.unregister_class(MEKTOOLS_OT_ImportMekrigMidlanderMale)
-    bpy.utils.unregister_class(MEKTOOLS_OT_ImportMekrigHighlanderMale)
-    bpy.utils.unregister_class(MEKTOOLS_OT_ImportMekrigElezenMale)
-    bpy.utils.unregister_class(MEKTOOLS_OT_ImportMekrigMiqoteMale)
-    bpy.utils.unregister_class(MEKTOOLS_OT_ImportMekrigRoegadynMale)
-    bpy.utils.unregister_class(MEKTOOLS_OT_ImportMekrigAuraMale)
-    bpy.utils.unregister_class(MEKTOOLS_OT_ImportMekrigHrothgarMale)
-    bpy.utils.unregister_class(MEKTOOLS_OT_ImportMekrigVieraMale)
-    bpy.utils.unregister_class(MEKTOOLS_OT_ImportMekrigLalafellMale)
-    bpy.utils.unregister_class(MEKTOOLS_OT_ImportMekrigLalafellFemale)
-    bpy.utils.unregister_class(MEKTOOLS_OT_ImportMekrigMidlanderFemale)
-    bpy.utils.unregister_class(MEKTOOLS_OT_ImportMekrigHighlanderFemale)
-    bpy.utils.unregister_class(MEKTOOLS_OT_ImportMekrigElezenFemale)
-    bpy.utils.unregister_class(MEKTOOLS_OT_ImportMekrigMiqoteFemale)
-    bpy.utils.unregister_class(MEKTOOLS_OT_ImportMekrigRoegadynFemale)
-    bpy.utils.unregister_class(MEKTOOLS_OT_ImportMekrigAuraFemale)
-    bpy.utils.unregister_class(MEKTOOLS_OT_ImportMekrigHrothgarFemale)
-    bpy.utils.unregister_class(MEKTOOLS_OT_ImportMekrigVieraFemale)
+    for cls in classes:
+        bpy.utils.unregister_class(cls)
