@@ -1,16 +1,14 @@
 import bpy
 from .panels import (
     mektools_support_community_panel, 
-    mektools_import_panel, 
-    mektools_male_rigs_panel, 
-    mektools_female_rigs_panel
+    mektools_import_panel
 )
 from .operators import (
     import_meddle_gltf, 
     import_textools_fbx, 
-    mekrig_operators,
+    mekrig_operators,  # Consolidated operators for each Mekrig import
     append_shaders,
-    lizzer_auto_shaders
+    lizzer_auto_shaders  # New file for auto shader fixing
 )
 
 bl_info = {
@@ -27,22 +25,18 @@ def register():
     # Register all panels
     mektools_support_community_panel.register()
     mektools_import_panel.register()
-    mektools_male_rigs_panel.register()
-    mektools_female_rigs_panel.register()
     
     # Register all operators
     import_meddle_gltf.register()
     import_textools_fbx.register()
-    mekrig_operators.register()  
+    mekrig_operators.register()  # Register all Mekrig import operators in this file
     append_shaders.register()
-    lizzer_auto_shaders.register()
+    lizzer_auto_shaders.register()  # Register the auto shader fixer operator
 
 def unregister():
     # Unregister all panels
     mektools_support_community_panel.unregister()
     mektools_import_panel.unregister()
-    mektools_male_rigs_panel.unregister()
-    mektools_female_rigs_panel.unregister()
     
     # Unregister all operators
     import_meddle_gltf.unregister()
