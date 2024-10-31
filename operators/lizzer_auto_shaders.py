@@ -13,6 +13,19 @@ shaderType = {
     "_etc_c_": "Dawntrail etc_c Skul version"
 }
 
+# Define node properties to map material properties to shader nodes
+nodeProperty = {
+    "Skin Color": "SkinColor",
+    "Lip Color": "LipColor",
+    "Lip Color Strength": "LipStick",
+    "Eye Color": "LeftIrisColor",
+    "Second Eye Color": "RightIrisColor",
+    "Hair Color": "MainColor",
+    "Highlights Color": "MeshColor",
+    "Enable Highlights": "Highlights",
+    "Limbal Color": "OptionColor"
+}
+
 class AutoMatFixOperator(bpy.types.Operator):
     """Automatically fix materials for selected objects after appending shaders"""
     bl_idname = "material.material_fixer_auto"
