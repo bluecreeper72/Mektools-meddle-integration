@@ -26,6 +26,12 @@ class VIEW3D_PT_ImportPanel(Panel):
         split.popover("MEKTOOLS_PT_MaleRigs", text="Male", icon_value=0)
         split.popover("MEKTOOLS_PT_FemaleRigs", text="Female", icon_value=0)
 
+        # Fixer Buttons Section
+        layout.separator()
+        layout.label(text="Fixer Buttons")
+        layout.operator("object.fix_backface_culling", text="Fix Backface Culling")
+        layout.operator("mesh.clear_custom_split_normals", text="Clear Custom Split Normals")
+
 
 class MEKTOOLS_PT_MaleRigs(Panel):
     """Male Mekrigs Import"""
