@@ -1,21 +1,21 @@
-# Mektools-Version 1.0.1
+# Mektools-Version 1.0.2
+
 ## Mektools 1.0 for Dawntrail is finally here!
 
-  ![MekTools Addon Interface](assets/mektools_1_0_1_ui.png)
- 
- please wait a bit while I organize a proper tutorial and place it here...
+![MekTools Addon Interface](assets/mektools_1_0_1_ui.png)
 
+please wait a bit while I organize a proper tutorial and place it here...
 
- **Step 1:** Go to the green code button and hit Download ZIP (Do not unpack this)
- **Step 2:** Open Blender 4.2.2 or later
- **Step 3:** Go to Edit > Preferences > Addons > Install from disc...
- **Step 4:** Go to the N Panel in the 3D Viewport to the Mektools tab...
+**Step 1:** Go to the green code button and hit Download ZIP (Do not unpack this)
+**Step 2:** Open Blender 4.2.2 or later
+**Step 3:** Go to Edit > Preferences > Addons > Install from disc...
+**Step 4:** Go to the N Panel in the 3D Viewport to the Mektools tab...
 
- Now you need to have something to import.
+Now you need to have something to import.
 
- Assuming you already have Dalamud installed along with Mare, Penumbra, Glamourer and other required plugins...
+Assuming you already have Dalamud installed along with Mare, Penumbra, Glamourer and other required plugins...
 
- Install [Meddle](https://github.com/PassiveModding/Meddle)
+Install [Meddle](https://github.com/PassiveModding/Meddle)
 
 On the Meddle UI, go to the Options tab, change Export type to RAW. This will export raw textures that are used in the shaders from Skulblaka. Then go to the Character tab, select your character and hit Export All Models.
 
@@ -39,7 +39,6 @@ The button for Import GLTF from Meddle and FBX from Textools are both to set thi
 
 Finally, Join the [Discord](https://www.discord.gg/98DqcKE) and ask any questions in the Help channel or share the cool stuff you've made with mektools!
 If there are any issues found, please make sure you are using Blender 4.2 or higher and then send a message in the discord server for help.
-
 
 Disclaimer: Do this in newly opened blender files for best results, if you have additional data in the blender file when importing, things might implode. If you want more than 1 character to be in the scene together after they've both been processed, select all of their mesh and the bones in Object mode, hit M to move the stuff to a new Collection, Name that collection the name of your character-- I like having mine set like this image below:
 
