@@ -11,7 +11,6 @@ class VIEW3D_PT_SupportCommunity(Panel):
     def draw(self, context):
         layout = self.layout
         layout.operator("wm.url_open", text="Support me on Patreon!", icon="URL").url = "https://www.patreon.com/MekuuMaki"
-        #my patreon could be also here o.o uwu
         layout.operator("wm.url_open", text="Join the Discord! (18+ only)", icon="URL").url = "https://www.discord.gg/98DqcKE"
 
 def register():
