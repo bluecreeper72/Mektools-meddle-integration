@@ -2,25 +2,41 @@ import bpy
 import json
 import os
 from bpy.types import Operator
-from bpy.props import StringProperty
-from bpy_extras.io_utils import ExportHelper
+from bpy.props import BoolProperty
+from bpy_extras.io_utils import ExportHelper  
 
-class EXPORT_OT_ExportPose(Operator, ExportHelper):
+BONE_GROUPS = ["Hair", "Face", "HandL", "HandR", "Tail", "Gear", "Body"]
+
+class EXPORT_SKELETON_OT_pose(Operator, ExportHelper):
     bl_idname = "export_skeleton.pose"
-    bl_label = "Export Skeleton Pose to POSE"
+    bl_label = "Export Skeleton Pose"
+    
+    
+    filepath: bpy.props.StringProperty(subtype="FILE_PATH")
+    filename_ext='.pose'
+    filter_glob: bpy.props.StringProperty(
+        default='*.pose',
+        options={'HIDDEN'}
+    )
 
-    filename_ext = '.pose'
-    filter_glob: StringProperty(default='*.pose', options={'HIDDEN'})
+    # Properties to capture the state of each group
+    Hair: BoolProperty(default=False)
+    Face: BoolProperty(default=False)
+    HandL: BoolProperty(default=False)
+    HandR: BoolProperty(default=False)
+    Tail: BoolProperty(default=False)
+    Gear: BoolProperty(default=False)
+    Body: BoolProperty(default=False)
 
     def execute(self, context):
-        # Load bone groups from JSON
+        # Load bone groups from the JSON file
         json_path = os.path.join(os.path.dirname(__file__), "..\data", "bone_groups.json")
         with open(json_path) as f:
             bone_groups = json.load(f)
-        
-        # Get selected groups from the panel
-        props = context.scene.bone_group_props
-        selected_groups = {group for group in bone_groups if getattr(props, group, False)}
+
+        # Get selected groups and filter bones based on selection
+        selected_groups = {name for name in BONE_GROUPS if getattr(self, name)}
+        selected_bones = [bone for group in selected_groups for bone in bone_groups.get(group, [])]
         
         # Prepare data for export
         armature = context.object
@@ -63,12 +79,12 @@ class EXPORT_OT_ExportPose(Operator, ExportHelper):
         # Write to the file
         with open(self.filepath, 'w') as f:
             json.dump(skeleton_data, f, indent=4)
-        
+
         self.report({'INFO'}, "Pose exported successfully!")
         return {'FINISHED'}
 
 def register():
-    bpy.utils.register_class(EXPORT_OT_ExportPose)
+    bpy.utils.register_class(EXPORT_SKELETON_OT_pose)
 
 def unregister():
-    bpy.utils.unregister_class(EXPORT_OT_ExportPose)
+    bpy.utils.unregister_class(EXPORT_SKELETON_OT_pose)

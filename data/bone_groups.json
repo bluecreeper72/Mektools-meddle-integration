@@ -1,5 +1,7 @@
 {
-  "HandsLeft": [
+  "Hair": ["j_ex_h0171_ke_l"],
+  "Face": ["j_f_dslip_r"],
+  "HandL": [
     "j_hito_a_l",
     "j_hito_b_l",
     "j_naka_a_l",
@@ -12,7 +14,7 @@
     "j_oya_b_l",
     "j_te_l"
   ],
-  "HandsRight": [
+  "HandR": [
     "j_hito_a_r",
     "j_hito_b_r",
     "j_naka_a_r",
@@ -24,5 +26,8 @@
     "j_oya_a_r",
     "j_oya_b_r",
     "j_te_r"
-  ]
+  ],
+  "Tail": ["n_sippo_a", "n_sippo_b", "n_sippo_c", "n_sippo_d"],
+  "Gear": ["j_sk_s_a_l"],
+  "Body": ["j_kosi"]
 }
