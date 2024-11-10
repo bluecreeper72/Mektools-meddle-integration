@@ -11,7 +11,6 @@ class EXPORT_SKELETON_OT_pose(Operator, ExportHelper):
     bl_idname = "export_skeleton.pose"
     bl_label = "Export Skeleton Pose"
     
-    
     filepath: bpy.props.StringProperty(subtype="FILE_PATH")
     filename_ext='.pose'
     filter_glob: bpy.props.StringProperty(
@@ -19,23 +18,15 @@ class EXPORT_SKELETON_OT_pose(Operator, ExportHelper):
         options={'HIDDEN'}
     )
 
-    # Properties to capture the state of each group
-    Hair: BoolProperty(default=False)
-    Face: BoolProperty(default=False)
-    HandL: BoolProperty(default=False)
-    HandR: BoolProperty(default=False)
-    Tail: BoolProperty(default=False)
-    Gear: BoolProperty(default=False)
-    Body: BoolProperty(default=False)
-
     def execute(self, context):
         # Load bone groups from the JSON file
-        json_path = os.path.join(os.path.dirname(__file__), "..\data", "bone_groups.json")
+        json_path = os.path.join(os.path.dirname(__file__), "..", "data", "bone_groups.json")
         with open(json_path) as f:
             bone_groups = json.load(f)
 
-        # Get selected groups and filter bones based on selection
-        selected_groups = {name for name in BONE_GROUPS if getattr(self, name)}
+        # Get selected groups based on the panel selections
+        bone_group_props = context.scene.bone_group_props
+        selected_groups = {name for name in BONE_GROUPS if getattr(bone_group_props, name)}
         selected_bones = [bone for group in selected_groups for bone in bone_groups.get(group, [])]
         
         # Prepare data for export
@@ -44,10 +35,10 @@ class EXPORT_SKELETON_OT_pose(Operator, ExportHelper):
             self.report({'ERROR'}, "No armature selected")
             return {'CANCELLED'}
         
-        # Root bone assumed as "root"
-        root_bone = armature.pose.bones.get("root")
+        # Origin bone assumed as "n_throw"
+        root_bone = armature.pose.bones.get("n_throw")
         if not root_bone:
-            self.report({'ERROR'}, "Root bone 'root' not found")
+            self.report({'ERROR'}, "Origin bone 'n_throw' not found")
             return {'CANCELLED'}
         
         root_matrix_world = armature.matrix_world @ root_bone.matrix
@@ -61,20 +52,19 @@ class EXPORT_SKELETON_OT_pose(Operator, ExportHelper):
             "Bones": {}
         }
 
-        # Collect data for selected groups
-        for group in selected_groups:
-            for bone_name in bone_groups[group]:
-                bone = armature.pose.bones.get(bone_name)
-                if bone:
-                    bone_matrix_world = armature.matrix_world @ bone.matrix
-                    relative_matrix = root_matrix_world.inverted() @ bone_matrix_world
+        # Collect data for selected bones
+        for bone_name in selected_bones:
+            bone = armature.pose.bones.get(bone_name)
+            if bone:
+                bone_matrix_world = armature.matrix_world @ bone.matrix
+                relative_matrix = root_matrix_world.inverted() @ bone_matrix_world
 
-                    bone_data = {
-                        "Position": f"{relative_matrix.translation.x:.6f}, {relative_matrix.translation.y:.6f}, {relative_matrix.translation.z:.6f}",
-                        "Rotation": f"{relative_matrix.to_quaternion().x:.6f}, {relative_matrix.to_quaternion().y:.6f}, {relative_matrix.to_quaternion().z:.6f}, {relative_matrix.to_quaternion().w:.6f}",
-                        "Scale": f"{relative_matrix.to_scale().x:.8f}, {relative_matrix.to_scale().y:.8f}, {relative_matrix.to_scale().z:.8f}"
-                    }
-                    skeleton_data["Bones"][bone_name] = bone_data
+                bone_data = {
+                    "Position": f"{relative_matrix.translation.x:.6f}, {relative_matrix.translation.y:.6f}, {relative_matrix.translation.z:.6f}",
+                    "Rotation": f"{relative_matrix.to_quaternion().x:.6f}, {relative_matrix.to_quaternion().y:.6f}, {relative_matrix.to_quaternion().z:.6f}, {relative_matrix.to_quaternion().w:.6f}",
+                    "Scale": f"{relative_matrix.to_scale().x:.8f}, {relative_matrix.to_scale().y:.8f}, {relative_matrix.to_scale().z:.8f}"
+                }
+                skeleton_data["Bones"][bone_name] = bone_data
         
         # Write to the file
         with open(self.filepath, 'w') as f:

@@ -21,16 +21,21 @@ class VIEW3D_PT_ExportPose(Panel):
     bl_region_type = 'UI'
     bl_category = "Mektools"
     bl_description = "Exports current pose to a .pose file"
+    
+    @classmethod
+    def poll(cls, context):
+        return context.active_object is not None and context.active_object.type == 'ARMATURE'
 
     def draw(self, context):
         layout = self.layout
         bone_group_props = context.scene.bone_group_props
-
-        # Export button with selected group data passed to the operator
-        export_op = layout.operator("export_skeleton.pose", text="Export Selected Groups")
-        for group_name in BONE_GROUPS:
-            setattr(export_op, group_name, getattr(bone_group_props, group_name))
         
+        # Export button
+        layout.operator("export_skeleton.pose", text="Export Selected Groups",icon = "EXPORT")
+        
+        layout.row().separator()
+
+        # Create toggles for each bone group
         layout.prop(bone_group_props, "Hair", toggle=True, text="Hair")
         layout.prop(bone_group_props, "Face", toggle=True, text="Face")
         
@@ -42,10 +47,7 @@ class VIEW3D_PT_ExportPose(Panel):
         layout.prop(bone_group_props, "Gear", toggle=True, text="Gear")
         layout.prop(bone_group_props, "Body", toggle=True, text="Body")
 
-
 def register():
-    for group_name in BONE_GROUPS:
-        setattr(BoneGroupProperties, group_name, BoolProperty(name=group_name, default=False))
     bpy.utils.register_class(BoneGroupProperties)
     bpy.utils.register_class(VIEW3D_PT_ExportPose)
     bpy.types.Scene.bone_group_props = PointerProperty(type=BoneGroupProperties)
@@ -54,3 +56,6 @@ def unregister():
     bpy.utils.unregister_class(VIEW3D_PT_ExportPose)
     bpy.utils.unregister_class(BoneGroupProperties)
     del bpy.types.Scene.bone_group_props
+    
+    
+    
