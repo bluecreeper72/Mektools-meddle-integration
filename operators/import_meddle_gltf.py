@@ -2,7 +2,6 @@ import bpy
 from bpy.types import Operator
 import os
 import importlib.util
-from math import radians
 
 # Load the bone names from bone_names.py in the data folder
 DATA_PATH = os.path.join(os.path.dirname(__file__), "../data")
@@ -83,13 +82,6 @@ class MEKTOOLS_OT_ImportGLTFFromMeddle(Operator):
         for bone_name in bone_names_to_delete:
             if bone_name in armature.data.edit_bones:
                 armature.data.edit_bones.remove(armature.data.edit_bones[bone_name])
-
-        # Set roll for each remaining hair bone to exactly 90 degrees
-        for bone in armature.data.edit_bones:
-            bone.select = True
-            bone.roll = radians(0)
-            bone.roll = radians(90)  # Set roll to 90 degrees
-            bone.select = False # fixes the bone loop so it sets each hair bone to 90 degrees individually? probably? maybe? h--halp lmao.
 
         # Ensure Object Mode after bone deletion
         bpy.ops.object.mode_set(mode='OBJECT')
