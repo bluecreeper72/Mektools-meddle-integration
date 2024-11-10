@@ -83,6 +83,10 @@ class MEKTOOLS_OT_ImportGLTFFromMeddle(Operator):
             if bone_name in armature.data.edit_bones:
                 armature.data.edit_bones.remove(armature.data.edit_bones[bone_name])
 
+        # Set roll for each remaining hair bone to 90 degrees
+        for bone in armature.data.edit_bones:
+            bone.roll = 1.5708  # 90 degrees in radians
+
         # Ensure Object Mode after bone deletion
         bpy.ops.object.mode_set(mode='OBJECT')
 
@@ -105,9 +109,6 @@ class MEKTOOLS_OT_ImportGLTFFromMeddle(Operator):
                 armature.data.edit_bones.remove(bone)
 
         bpy.ops.object.mode_set(mode='OBJECT')
-
-        # Generate list of remaining hair bones after deleting unwanted bones
-        hair_bone_names = [bone.name for bone in armature.data.bones]
 
         # Step 3: Identify the Mekrig to append based on "iri" object data
         iri_object = next(
@@ -140,7 +141,7 @@ class MEKTOOLS_OT_ImportGLTFFromMeddle(Operator):
 
         # Set parent only for hair bones
         for bone in n_root_armature.data.edit_bones:
-            if bone.name in hair_bone_names:
+            if bone.name in influential_bones:
                 bone.parent = mek_kao_bone
 
         # Switch to Pose Mode to apply custom shape and color to hair bones
@@ -148,11 +149,11 @@ class MEKTOOLS_OT_ImportGLTFFromMeddle(Operator):
         cs_hair = bpy.data.objects.get("cs.hair")
 
         # Apply custom shape and Theme 1 Red color directly to hair bones
-        for bone_name in hair_bone_names:
+        for bone_name in influential_bones:
             pose_bone = n_root_armature.pose.bones.get(bone_name)
             if pose_bone:
                 pose_bone.custom_shape = cs_hair
-                pose_bone.color.palette = 'THEME01'
+                pose_bone.color.palette = 'THEME01'  # Theme 1 Red
 
         bpy.ops.object.mode_set(mode='OBJECT')
 
@@ -165,13 +166,14 @@ class MEKTOOLS_OT_ImportGLTFFromMeddle(Operator):
         # Step 6: Update Armature Modifiers on imported meshes only
         for obj in imported_meshes:
             for mod in obj.modifiers:
-                if mod.type == 'ARMATURE':
-                    mod.object = bpy.data.objects["n_root"]
+                if mod.type == 'ARMATURE':  # Check if it is an Armature modifier
+                    mod.object = bpy.data.objects["n_root"]  # Set n_root as the target
 
-        # Run the Auto Material Fix Operator to fix all materials after import
+        # Step 7: Fix Shaders
+        bpy.ops.mektools.append_shaders()
         bpy.ops.material.material_fixer_auto()
 
-        self.report({'INFO'}, "Imported GLTF, cleaned up, joined hair bones, applied color and custom shape, parented to 'n_root', and fixed materials.")
+        self.report({'INFO'}, "Imported GLTF, cleaned up, joined hair bones, applied color and custom shape, and parented all to 'n_root'.")
         return {'FINISHED'}
 
     def invoke(self, context, event):
