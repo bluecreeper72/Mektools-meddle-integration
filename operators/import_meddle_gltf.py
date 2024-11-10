@@ -84,11 +84,6 @@ class MEKTOOLS_OT_ImportGLTFFromMeddle(Operator):
             if bone_name in armature.data.edit_bones:
                 armature.data.edit_bones.remove(armature.data.edit_bones[bone_name])
 
-        # Set roll for each remaining hair bone to exactly 90 degrees
-        for bone in armature.data.edit_bones:
-            armature.data.edit_bones.active = bone  # Set each bone as active
-            bone.roll = radians(90)  # Set roll to exactly 90 degrees
-
         # Ensure Object Mode after bone deletion
         bpy.ops.object.mode_set(mode='OBJECT')
 
@@ -145,6 +140,7 @@ class MEKTOOLS_OT_ImportGLTFFromMeddle(Operator):
         for bone in n_root_armature.data.edit_bones:
             if bone.name in influential_bones:
                 bone.parent = mek_kao_bone
+                bone.roll = radians(90)
 
         # Switch to Pose Mode to apply custom shape and color to hair bones
         bpy.ops.object.mode_set(mode='POSE')
