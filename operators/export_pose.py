@@ -29,6 +29,13 @@ class EXPORT_SKELETON_OT_pose(Operator, ExportHelper):
         selected_groups = {name for name in BONE_GROUPS if getattr(bone_group_props, name)}
         selected_bones = [bone for group in selected_groups for bone in bone_groups.get(group, [])]
         
+        for group in selected_groups:
+            selected_bones.extend(bone_groups.get(group, []))
+
+            # If the 'Hair' group is selected, include all bones that start with 'j_ex'
+            if group == "Hair":
+                selected_bones.extend([bone.name for bone in context.object.pose.bones if bone.name.startswith("j_ex")])
+        
         # Prepare data for export
         armature = context.object
         if not armature or armature.type != 'ARMATURE':
