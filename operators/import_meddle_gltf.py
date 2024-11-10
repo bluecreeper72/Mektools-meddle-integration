@@ -85,7 +85,7 @@ class MEKTOOLS_OT_ImportGLTFFromMeddle(Operator):
 
         # Set roll for each remaining hair bone to 90 degrees
         for bone in armature.data.edit_bones:
-            bone.roll = 90 * (3.141592653589793 / 180)  # 90 degrees in stfu I cry
+            bone.roll = 1.5708  # 90 degrees in stfu I cry in radians.......
 
         # Ensure Object Mode after bone deletion
         bpy.ops.object.mode_set(mode='OBJECT')
