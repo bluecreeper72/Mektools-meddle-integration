@@ -85,6 +85,7 @@ class MEKTOOLS_OT_ImportGLTFFromMeddle(Operator):
 
         # Set roll for each remaining hair bone to 90 degrees
         for bone in armature.data.edit_bones:
+            bone.roll = 0 # should set bone to 0 and then makes it so the 90 degrees thing should work?
             bone.roll = 1.5708  # 90 degrees in stfu I cry in radians.......
 
         # Ensure Object Mode after bone deletion
