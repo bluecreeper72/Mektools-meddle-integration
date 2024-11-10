@@ -88,6 +88,7 @@ class MEKTOOLS_OT_ImportGLTFFromMeddle(Operator):
         for bone in armature.data.edit_bones:
             bone.select = True
             bone.roll = radians(90)  # Set roll to 90 degrees
+            bone.select = False # fixes the bone loop so it sets each hair bone to 90 degrees individually? probably? maybe? h--halp lmao.
 
         # Ensure Object Mode after bone deletion
         bpy.ops.object.mode_set(mode='OBJECT')
