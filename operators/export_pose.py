@@ -5,6 +5,12 @@ from os import path
 from mathutils import *
 from bpy_extras.io_utils import ExportHelper
 
+def bone_filter(bone_name):
+    #Returns True if the bone should be included in the export,
+    #otherwise returns False.
+    # Skip bones that start with "j_ex"
+    return not bone_name.startswith("j_ex")
+
 class EXPORT_OT_ExportPose(bpy.types.Operator, ExportHelper):
     bl_idname = "export_skeleton.pose"
     bl_label = "Export Skeleton Pose to POSE"
@@ -41,6 +47,10 @@ class EXPORT_OT_ExportPose(bpy.types.Operator, ExportHelper):
                 }
 
                 for bone in armature.pose.bones:
+                    # Apply the bone filter
+                    if not bone_filter(bone.name):
+                        continue  # Skip bones that don't pass the filter
+                    
                     # Get the bone's transformation in world space
                     bone_matrix_world = armature.matrix_world @ bone.matrix
                     
