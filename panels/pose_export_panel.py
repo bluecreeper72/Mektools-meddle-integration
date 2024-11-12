@@ -20,7 +20,6 @@ class VIEW3D_PT_ExportPose(Panel):
     bl_space_type = 'VIEW_3D'
     bl_region_type = 'UI'
     bl_category = "Mektools"
-    bl_description = "Exports current pose to a .pose file"
     
     @classmethod
     def poll(cls, context):
@@ -31,7 +30,7 @@ class VIEW3D_PT_ExportPose(Panel):
         bone_group_props = context.scene.bone_group_props
         
         # Export button
-        layout.operator("export_skeleton.pose", text="Export Selected Groups",icon = "EXPORT")
+        layout.operator("export_skeleton.pose", text="Export Selected Groups",icon = "EXPORT").arg = "Exports selected Bone Groups into a .pose file."
         
         layout.row().separator()
 

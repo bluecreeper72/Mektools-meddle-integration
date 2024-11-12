@@ -10,6 +10,8 @@ BONE_GROUPS = ["Hair", "Face", "HandL", "HandR", "Tail", "Gear", "Body"]
 class EXPORT_SKELETON_OT_pose(Operator, ExportHelper):
     bl_idname = "export_skeleton.pose"
     bl_label = "Export Skeleton Pose"
+    arg: bpy.props.StringProperty()
+    
     
     filepath: bpy.props.StringProperty(subtype="FILE_PATH")
     filename_ext='.pose'
@@ -18,6 +20,10 @@ class EXPORT_SKELETON_OT_pose(Operator, ExportHelper):
         options={'HIDDEN'}
     )
 
+    @classmethod
+    def description(cls, context, properties):
+        return properties.arg
+    
     def execute(self, context):
         # Load bone groups from the JSON file
         json_path = os.path.join(os.path.dirname(__file__), "..", "data", "bone_groups.json")
