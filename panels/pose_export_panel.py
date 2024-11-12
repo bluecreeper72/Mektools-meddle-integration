@@ -46,6 +46,7 @@ class VIEW3D_PT_ExportPose(Panel):
         layout.prop(bone_group_props, "Tail", toggle=True, text="Tail")
         layout.prop(bone_group_props, "Gear", toggle=True, text="Gear")
         layout.prop(bone_group_props, "Body", toggle=True, text="Body")
+        
 
 def register():
     bpy.utils.register_class(BoneGroupProperties)
