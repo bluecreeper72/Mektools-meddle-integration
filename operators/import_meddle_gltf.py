@@ -51,12 +51,11 @@ class MEKTOOLS_OT_ImportGLTFFromMeddle(Operator):
         imported_meshes = [obj for obj in context.selected_objects if obj.type == 'MESH']
 
         # Step 1: Perform all cleanup tasks
-        # Delete Icosphere if it exists to avoid bone custom shape assignments
         icosphere = bpy.data.objects.get("Icosphere")
         if icosphere:
             bpy.data.objects.remove(icosphere)
 
-        # Select all objects and clear parent, keeping transform
+        # Clear parent for all objects and keep transform
         bpy.ops.object.select_all(action='SELECT')
         bpy.ops.object.parent_clear(type='CLEAR_KEEP_TRANSFORM')
 
@@ -66,87 +65,72 @@ class MEKTOOLS_OT_ImportGLTFFromMeddle(Operator):
             bpy.data.collections.remove(collection_to_delete)
 
         # Load the list of bone names to delete
-        bone_names_to_delete = load_bone_names()
+        bone_names_to_delete = set(load_bone_names())  # Convert to a set for efficient lookups
 
-        # Directly reference the "Armature" object
+        # Reference the "Armature" object
         armature = bpy.data.objects.get("Armature")
-
         if not armature:
             self.report({'ERROR'}, "No armature found with the name 'Armature'.")
             return {'CANCELLED'}
 
-        # Activate the armature and enter Edit Mode to delete specific bones
         bpy.context.view_layer.objects.active = armature
         bpy.ops.object.mode_set(mode='EDIT')
 
-        # Remove bones from the armature based on `bone_names.py`
+        # Remove bones from bone_names.py
         for bone_name in bone_names_to_delete:
             if bone_name in armature.data.edit_bones:
                 armature.data.edit_bones.remove(armature.data.edit_bones[bone_name])
 
-        # Ensure Object Mode after bone deletion
+        # Return to Object Mode temporarily
         bpy.ops.object.mode_set(mode='OBJECT')
 
-        # Step 2: Remove bones without influence on objects with "hir" in their name
+        # Step 2: Filter influential bones for "hir" objects
         hir_objects = [obj for obj in bpy.data.objects if "hir" in obj.name]
-        
-        # Collect influential bone names from vertex groups with weights
         influential_bones = set()
         for obj in hir_objects:
             for vgroup in obj.vertex_groups:
+                if vgroup.name in bone_names_to_delete:  # Skip bones listed in bone_names.py
+                    continue
                 if any(vgroup.index in [g.group for g in v.groups if g.weight > 0] for v in obj.data.vertices):
                     influential_bones.add(vgroup.name)
 
-        # Enter Edit Mode for the "Armature" to delete non-influential bones
-        bpy.context.view_layer.objects.active = armature
         bpy.ops.object.mode_set(mode='EDIT')
-
         for bone in armature.data.edit_bones:
             if bone.name not in influential_bones:
                 armature.data.edit_bones.remove(bone)
 
+        # Return to Object Mode after all bone operations
         bpy.ops.object.mode_set(mode='OBJECT')
 
-        # Step 3: Identify the Mekrig to append based on "iri" object data
+        # Step 3: Append the correct Mekrig based on "iri" object
         iri_object = next(
             (obj for obj in bpy.data.objects if "iri" in obj.name or any("iri" in mat.name for mat in obj.material_slots)),
             None
         )
 
-        # Extract the racial code from the object name
         for code in racial_code_to_operator:
             if code in iri_object.name:
                 operator_id = racial_code_to_operator[code]
+                eval(f"bpy.ops.{operator_id}()")
                 break
 
-        # Use the identified operator to append the Mekrig
-        result = eval(f"bpy.ops.{operator_id}()")
-
-        # Locate "n_root" in the appended collection
+        # Step 4: Join Armature with Mekrig and parent hair bones to "mek kao"
         n_root_armature = bpy.data.objects.get("n_root")
-
-        # Step 4: Join Armature to n_root and selectively parent hair bones
-        # Select "Armature" and "n_root" and join
         bpy.context.view_layer.objects.active = n_root_armature
         armature.select_set(True)
         n_root_armature.select_set(True)
         bpy.ops.object.join()
 
-        # Set parent of only hair bones to "mek kao" in "n_root"
         bpy.ops.object.mode_set(mode='EDIT')
         mek_kao_bone = n_root_armature.data.edit_bones.get("mek kao")
-
-        # Set parent only for hair bones
         for bone in n_root_armature.data.edit_bones:
             if bone.name in influential_bones:
                 bone.parent = mek_kao_bone
                 bone.roll = radians(90)
 
-        # Switch to Pose Mode to apply custom shape and color to hair bones
+        # Switch to Pose Mode for hair bone adjustments
         bpy.ops.object.mode_set(mode='POSE')
         cs_hair = bpy.data.objects.get("cs.hair")
-
-        # Apply custom shape and Theme 1 Red color directly to hair bones
         for bone_name in influential_bones:
             pose_bone = n_root_armature.pose.bones.get(bone_name)
             if pose_bone:
@@ -161,7 +145,7 @@ class MEKTOOLS_OT_ImportGLTFFromMeddle(Operator):
         bpy.context.view_layer.objects.active = n_root_armature
         bpy.ops.object.parent_set(type='OBJECT')
 
-        # Step 6: Update Armature Modifiers on imported meshes only
+        # Step 6: Update Armature Modifiers for imported meshes
         for obj in imported_meshes:
             for mod in obj.modifiers:
                 if mod.type == 'ARMATURE':  # Check if it is an Armature modifier
@@ -171,7 +155,7 @@ class MEKTOOLS_OT_ImportGLTFFromMeddle(Operator):
         bpy.ops.mektools.append_shaders()
         bpy.ops.material.material_fixer_auto()
 
-        self.report({'INFO'}, "Imported GLTF, cleaned up, joined hair bones, applied color and custom shape, and parented all to 'n_root'.")
+        self.report({'INFO'}, "GLTF imported and processed successfully.")
         return {'FINISHED'}
 
     def invoke(self, context, event):
