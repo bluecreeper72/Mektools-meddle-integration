@@ -3,7 +3,7 @@
   "author": "Meku Maki, Shino Mythmaker",
 "version": [102, , ],
 "feature_name": "feature/test",
-"feature_patch": 1,
+"feature_patch": 2,
   "blender": {
     "min_version": "4.2"
   },
