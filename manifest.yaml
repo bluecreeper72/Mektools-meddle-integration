@@ -1,8 +1,8 @@
 name: "Mektools"
 author: "Meku Maki, Shino Mythmaker"
-version: [1, 0, 4]
+version: [1, 0, 5]
 feature_name: dev
-feature_patch: 1
+feature_patch: 0
 blender:
   min_version: 4.2
 description: "Mektools Addon Structure"
