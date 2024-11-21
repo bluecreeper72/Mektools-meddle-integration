@@ -1,4 +1,7 @@
 import bpy
+import json
+import os
+
 from .panels import (
     mektools_support_community_panel, 
     mektools_import_panel,
@@ -16,14 +19,15 @@ from .operators import (
     fixer_operators  # New fixer operators for custom split normals and backface culling
 )
 
+
 bl_info = {
-    "name": "MekTools V1.0.2",
+    "name": "Mektools",
     "author": "Meku Maki, Shino Mythmaker",
-    "version": (1, 0, 2),
-    "blender": (4, 2, 0),
-    "location": "View3D > MekTools Tab",
-    "description": "MekTools Addon Structure for character and material import adjustments",
+    "version": (1,2,4),
+    "blender": (4,2),
+    "description": "Mektools Addon Structure",
     "category": "Import-Export",
+    "location": "View3D > Mektools Tab",
 }
 
 def register():
@@ -42,6 +46,7 @@ def register():
     append_shaders.register()
     lizzer_auto_shaders.register()
     fixer_operators.register()  # Register the fixer operators
+    
 
 def unregister():
     # Unregister all panels
