@@ -11,19 +11,19 @@ from .panels import (
 from .operators import (
     import_meddle_gltf, 
     import_textools_fbx, 
-    export_pose,       #.pose file export 
-    export_glb,       # different gltf exports
-    mekrig_operators,  # Consolidated operators for each Mekrig import
+    export_pose, 
+    export_glb, 
+    mekrig_operators, 
     append_shaders,
-    lizzer_auto_shaders,  # Auto shader fixer operator
-    fixer_operators  # New fixer operators for custom split normals and backface culling
+    lizzer_auto_shaders, 
+    fixer_operators 
 )
 
 
 bl_info = {
     "name": "Mektools",
     "author": "Meku Maki, Shino Mythmaker",
-    "version": (1,2,4),
+    "version": (1,2,5),
     "blender": (4,2),
     "description": "Mektools Addon Structure",
     "category": "Import-Export",
@@ -45,7 +45,7 @@ def register():
     mekrig_operators.register()
     append_shaders.register()
     lizzer_auto_shaders.register()
-    fixer_operators.register()  # Register the fixer operators
+    fixer_operators.register()
     
 
 def unregister():
@@ -63,7 +63,7 @@ def unregister():
     mekrig_operators.unregister()
     append_shaders.unregister()
     lizzer_auto_shaders.unregister()
-    fixer_operators.unregister()  # Unregister the fixer operators
+    fixer_operators.unregister()
 
 if __name__ == "__main__":
     register()
