@@ -172,6 +172,10 @@ class MEKTOOLS_OT_ImportGLTFFromMeddle(Operator):
         # Step 7: Fix/Append Shaders
         # If the user wants to append meddle shaders we append those, otherwise we just fix the materials
         if bpy.context.scene.import_with_meddle_shader:
+            # Since the code above selects everything after import, we need to deselect everything before appending the shaders
+            # Else Meddle might attempt to add a shader to the Default Cube or any other already existing meshes and will crash
+            bpy.ops.object.select_all(action='DESELECT')
+
             # Get the character directory from the filepath
             # Since filepath points to the .gltf file, we need to go the directory where the gltf is found, not get the gltf itself
             character_directory = os.path.dirname(self.filepath)
