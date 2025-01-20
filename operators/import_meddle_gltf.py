@@ -160,7 +160,7 @@ class MEKTOOLS_OT_ImportGLTFFromMeddle(Operator):
         # We need to deselect everything before parenting the imported meshes to n_root
         # Just to make sure we dont have an object selected that we dont want to parent
         bpy.ops.object.select_all(action='DESELECT')
-        
+
         # Step 5: Parent the items of imported_meshes items objects to "n_root"
         for mesh in imported_meshes:
             mesh.select_set(True)   
@@ -204,6 +204,24 @@ class MEKTOOLS_OT_ImportGLTFFromMeddle(Operator):
         else:
             bpy.ops.mektools.append_shaders()
             bpy.ops.material.material_fixer_auto()
+
+
+        # Step 8: Cleanup
+        # We merge all meshes whose name contain "skin", as we would usually just do this manually. So why not automate that aswell lmao?
+        skin_meshes = [obj for obj in imported_meshes if "skin" in obj.name]
+        
+        # We select the first found mesh as the active object, so we can join all the other meshes to it
+        bpy.context.view_layer.objects.active = skin_meshes[0]
+
+        for mesh in skin_meshes:
+            mesh.select_set(True)
+
+        # And we merge 'em
+        bpy.ops.object.join()
+
+        # Lastly we deselect everything
+        bpy.ops.object.select_all(action='DESELECT')
+
         self.report({'INFO'}, "Imported GLTF, cleaned up, joined hair bones, applied color and custom shape, and parented all to 'n_root'.")
         return {'FINISHED'}
 
