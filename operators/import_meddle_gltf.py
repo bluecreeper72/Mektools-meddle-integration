@@ -169,10 +169,23 @@ class MEKTOOLS_OT_ImportGLTFFromMeddle(Operator):
                 if mod.type == 'ARMATURE':  # Check if it is an Armature modifier
                     mod.object = bpy.data.objects["n_root"]  # Set n_root as the target
 
-        # Step 7: Fix Shaders
-        bpy.ops.mektools.append_shaders()
-        bpy.ops.material.material_fixer_auto()
+        # Step 7: Fix/Append Shaders
+        # If the user wants to append meddle shaders we append those, otherwise we just fix the materials
+        if bpy.context.scene.import_with_meddle_shader:
+            # Get the character directory from the filepath
+            # Since filepath points to the .gltf file, we need to go the directory where the gltf is found, not get the gltf itself
+            character_directory = os.path.dirname(self.filepath)
 
+            # The extra "" is added at the end because without it it would resolve to /character_directory/cache, which makes Meddle complain.
+            # So with the extra "" it turns into /character_directory/cache/
+            meddle_cache_directory = os.path.join(character_directory, "cache","")
+
+            # We call the Meddle shader importer which will handle all the material assignments for us
+            bpy.ops.append.use_shaders_current('EXEC_DEFAULT', directory=meddle_cache_directory)
+
+        else:
+            bpy.ops.mektools.append_shaders()
+            bpy.ops.material.material_fixer_auto()
         self.report({'INFO'}, "Imported GLTF, cleaned up, joined hair bones, applied color and custom shape, and parented all to 'n_root'.")
         return {'FINISHED'}
 
