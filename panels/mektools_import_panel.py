@@ -11,6 +11,9 @@ class VIEW3D_PT_ImportPanel(Panel):
     def draw(self, context):
         layout = self.layout
 
+        #checkbox to see if we import the meddle shader aswell
+        layout.prop(context.scene, "import_with_meddle_shader", text="Import Meddle Shader")
+
         # Import Options
         row = layout.row(align=True)
         row.operator("mektools.import_meddle_gltf", text="GLTF from Meddle")

@@ -14,6 +14,10 @@ from .operators import (
     fixer_operators  # New fixer operators for custom split normals and backface culling
 )
 
+from .properties import (
+    import_panel_properties
+)
+
 bl_info = {
     "name": "MekTools V1.0.2",
     "author": "Meku Maki, Shino Mythmaker",
@@ -39,6 +43,9 @@ def register():
     lizzer_auto_shaders.register()
     fixer_operators.register()  # Register the fixer operators
 
+    #register all properties
+    import_panel_properties.register()
+
 def unregister():
     # Unregister all panels
     mektools_support_community_panel.unregister()
@@ -53,6 +60,9 @@ def unregister():
     append_shaders.unregister()
     lizzer_auto_shaders.unregister()
     fixer_operators.unregister()  # Unregister the fixer operators
+
+    #unregister all properties
+    import_panel_properties.unregister()
 
 if __name__ == "__main__":
     register()
