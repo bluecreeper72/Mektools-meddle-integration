@@ -6,7 +6,7 @@ from . import blend_import
 from . import node_groups
 
 class ShaderFixActive(bpy.types.Operator):    
-    bl_idname = "append.use_shaders"
+    bl_idname = "meekleToolsuse_shaders"
     bl_label = "Use Shaders"    
     
     directory: bpy.props.StringProperty(subtype='DIR_PATH')    
@@ -37,7 +37,7 @@ class ShaderFixActive(bpy.types.Operator):
         return shpkMtrlFixer(active, active.active_material, self.directory)
     
 class ShaderFixSelected(bpy.types.Operator):    
-    bl_idname = "append.use_shaders_current"
+    bl_idname = "meekleToolsuse_shaders_current"
     bl_label = "Use Shaders on Current Material"
         
     directory: bpy.props.StringProperty(subtype='DIR_PATH')    

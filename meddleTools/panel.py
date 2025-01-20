@@ -99,7 +99,6 @@ classes = [
     blend_import.ShaderHelper,
     shader_fix.ShaderFixActive,
     shader_fix.ShaderFixSelected,
-    MeddlePanel,
 ]
 
 def register():
