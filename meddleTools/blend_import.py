@@ -21,7 +21,7 @@ def import_shaders():
 
 class ImportShaders(bpy.types.Operator):
 
-    bl_idname = "meekleToolsimport_shaders"
+    bl_idname = "meekle_tools.import_shaders"
     bl_label = "Import Shaders"
     
     def execute(self, context):
@@ -32,7 +32,7 @@ class ImportShaders(bpy.types.Operator):
 
 class ShaderHelper(bpy.types.Operator):
 
-    bl_idname = "meekleToolsshader_helper"
+    bl_idname = "meekle_tools.shader_helper"
     bl_label = "map selected"
     
     def execute(self, context):

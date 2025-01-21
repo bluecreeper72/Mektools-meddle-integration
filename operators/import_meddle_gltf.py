@@ -3,6 +3,7 @@ from bpy.types import Operator
 import os
 import importlib.util
 
+
 # Load the bone names from bone_names.py in the data folder
 DATA_PATH = os.path.join(os.path.dirname(__file__), "../data")
 BONE_NAMES_FILE = os.path.join(DATA_PATH, "bone_names.py")
@@ -193,7 +194,7 @@ class MEKTOOLS_OT_ImportGLTFFromMeddle(Operator):
 
             try:
                 # We call the Meddle shader importer which will handle all the material assignments for us
-                bpy.ops.meekleToolsuse_shaders_current('EXEC_DEFAULT', directory=meddle_cache_directory)
+                bpy.ops.meekle_tools.use_shaders_current('EXEC_DEFAULT', directory=meddle_cache_directory)
 
             except AttributeError:
                 self.report({'ERROR'}, "Meddle shaders couldn't be imported. Is the MeddleTools addon installed?")

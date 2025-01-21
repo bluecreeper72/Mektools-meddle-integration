@@ -3,7 +3,7 @@ from . import blend_import
 from . import shader_fix
 # get the latest version from the github release page
 import requests
-import toml
+#import toml
 import os
 
 repo_url = "https://github.com/PassiveModding/MeddleTools"
@@ -102,22 +102,9 @@ classes = [
 ]
 
 def register():
-    try:
-        global latest_version
-        latest_version = getLatestVersion()
-    except Exception as e:
-        print(f"Failed to get latest version: {e}")
-        
-    try:
-        # read from addon.json Version property
-        with open(os.path.join(os.path.dirname(__file__), 'blender_manifest.toml')) as f:
-            data = toml.load(f)
-            global current_version
-            current_version = data["version"]
-    except Exception as e:
-        print(f"Failed to read current version: {e}")
     
     for cls in classes:
+        print("Registering class: " + cls.__name__)
         bpy.utils.register_class(cls)
 
 def unregister():
