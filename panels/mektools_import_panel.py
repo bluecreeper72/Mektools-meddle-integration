@@ -12,7 +12,7 @@ class VIEW3D_PT_ImportPanel(Panel):
         layout = self.layout
 
         #checkbox to see if we import the meddle shader aswell
-        layout.prop(context.scene, "import_with_meddle_shader", text="Import Meddle Shader (Requires MeddleTools addon)")
+        layout.prop(context.scene, "import_with_meddle_shader", text="Import Meddle Shader (GLTF Only)")
 
         # Import Options
         row = layout.row(align=True)
