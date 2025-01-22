@@ -40,7 +40,7 @@ class VIEW3D_PT_ImportPanel(Panel):
             layout.label(text="MeddleTools addon not installed.")
             layout.label(text="Please install it for shader functionality.")
 
-            layout.operator("wm.url_open", text="Get MeddleTools Addon", icon="URL").url = "https://github.com/meddle-addon-repo"
+            layout.operator("wm.url_open", text="Get MeddleTools Addon", icon="URL").url = "https://github.com/PassiveModding/MeddleTools/releases"
         
 
 
