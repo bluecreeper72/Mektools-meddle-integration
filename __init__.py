@@ -2,7 +2,9 @@ import bpy
 from .panels import (
     mektools_support_community_panel, 
     mektools_import_panel,
-    mythtools_export_panel
+    mythtools_export_panel,
+    
+    
 )
 from .operators import (
     import_meddle_gltf, 
@@ -11,14 +13,12 @@ from .operators import (
     mekrig_operators,  # Consolidated operators for each Mekrig import
     append_shaders,
     lizzer_auto_shaders,  # Auto shader fixer operator
-    fixer_operators  # New fixer operators for custom split normals and backface culling
+    fixer_operators,  # New fixer operators for custom split normals and backface culling
 )
 
 from .properties import (
     import_panel_properties
 )
-
-from .meddleTools import panel
 
 bl_info = {
     "name": "MekTools V1.0.2",
@@ -48,10 +48,6 @@ def register():
     #register all properties
     import_panel_properties.register()
 
-
-    #we register all of meddle's stuff
-    panel.register()
-
 def unregister():
     # Unregister all panels
     mektools_support_community_panel.unregister()
@@ -68,10 +64,7 @@ def unregister():
     fixer_operators.unregister()  # Unregister the fixer operators
 
     #unregister all properties
-    import_panel_properties.unregister()
-
-    #we unregister all of meddle's stuff
-    panel.unregister()
+    import_panel_properties.unregister()    
     
 
 if __name__ == "__main__":
