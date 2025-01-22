@@ -21,6 +21,7 @@ class VIEW3D_PT_ImportPanel(Panel):
         for mod in addon_utils.modules():
             if mod.bl_info['name'] == "Meddle Tools":  
                 isMeddleInstalled = True
+
                 break
 
         if isMeddleInstalled:
