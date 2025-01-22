@@ -19,11 +19,7 @@ class VIEW3D_PT_ImportPanel(Panel):
         isMeddleInstalled = False
 
         for mod in addon_utils.modules():
-            if mod.bl_info['name'] == "Meddle Tools": 
-                print("Meddle is installed")
-                print(f"Meddle version: {mod.bl_info['version']}")              
-                print(mod.__file__)
- 
+            if mod.bl_info['name'] == "Meddle Tools":  
                 isMeddleInstalled = True
                 break
 
