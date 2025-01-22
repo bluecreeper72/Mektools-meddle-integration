@@ -28,7 +28,7 @@ class VIEW3D_PT_ImportPanel(Panel):
                 break
 
         if isMeddleInstalled:
-            layout.prop(context.scene, "import_with_meddle_shader", text="Import Meddle Shader (GLTF Only)")
+            layout.prop(context.scene, "import_with_meddle_shader", text="Import MeddleTools Shader (GLTF Only)")
 
         # Import Options
         row = layout.row(align=True)
@@ -38,13 +38,13 @@ class VIEW3D_PT_ImportPanel(Panel):
 
         if isMeddleInstalled:
             # Shader Append Button
-            layout.operator('append.import_shaders',  text="Import Meddle Shaders", icon="SHADING_TEXTURE")
-            layout.operator('append.use_shaders_current', text="Apply Meddle Shaders To Selected Objects", icon="SHADING_TEXTURE")
+            layout.operator('append.import_shaders',  text="Import MeddleTools Shaders", icon="SHADING_TEXTURE")
+            layout.operator('append.use_shaders_current', text="Apply MeddleTools Shaders To Selected Objects", icon="SHADING_TEXTURE")
         else:
-            layout.label(text="Meddle not installed.")
-            layout.label(text="Please install for shader functionality.")
+            layout.label(text="MeddleTools addon not installed.")
+            layout.label(text="Please install it for shader functionality.")
 
-            layout.operator("wm.url_open", text="Get Meddle Addon", icon="URL").url = "https://github.com/meddle-addon-repo"
+            layout.operator("wm.url_open", text="Get MeddleTools Addon", icon="URL").url = "https://github.com/meddle-addon-repo"
         
 
 
